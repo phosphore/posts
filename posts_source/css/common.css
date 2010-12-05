@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+body {
+	height: 101%;
+	font-family: "sans-serif, DejaVu Sans";
+	text-align: center;
+}
+
+#posts {
+	margin: 0 auto;
+	width: 800px;
+	background-color: #ebebeb;
+	font-size: 12px;
+	display: inline-block;
+}
+
+.date_new {
+	font-weight: bold;
+	float: right;
+	color: red;
+	font-size: 10px;
+	font-style: italic;
+}
+
+.title {
+	float: left;
+	font-weight: bold;
+}
+
+.author_name {
+	float: right;
+	margin-right: 7px;
+	border-right: 1px solid #bbb;
+	padding-right: 4px;
+	font-size: 10px;
+}
+
+.date {
+	float: right;
+	color: #bbb;
+	font-size: 10px;
+	font-style: italic;
+	
+}

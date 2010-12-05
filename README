@@ -1,0 +1,8 @@
+Description
+-----------
+
+This is a web app for posting topics and replies.  
+Topics and replies are updated on the page dynamically at specified intervals.
+It's written in PHP, Javascript (with JQuery) and PostgreSQL.   
+
+See screenshots.

@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+#form legend {
+	text-align: left;
+	border-bottom: 1px solid #333;
+	width: 100%;
+	padding-bottom: 4px;
+}
+
+#form fieldset {
+	border: none;
+}
+
+#form legend {
+	font-weight: bold;
+}
+
+#form label {
+	display: inline-block;
+	width: 90px;
+	vertical-align: top;
+	padding-top: 1px;
+}
+
+#form .text {
+	width: 300px;
+}
+
+#form textarea {
+	height: 100px;
+	width: 300px;
+}
+
+#form .required {
+	color: red;
+	font-weight: bold;
+}
+
+#wrapper {
+	margin: 0px auto;
+	width: 420px;
+	text-align: right;
+}
