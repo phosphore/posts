@@ -1,4 +1,8 @@
 <?php
+namespace classes;
+
+use DateTime;
+
 abstract class Post {
 
 	abstract protected function total_pages($total_pgs); 

@@ -1,4 +1,6 @@
 <?php
+namespace classes;
+
 final class Pager {
 	private $start_page;
 	private $total_pages;

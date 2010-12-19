@@ -1,4 +1,6 @@
 <?php
+namespace classes;
+
 class Topic extends Post {
 
 	private $title;

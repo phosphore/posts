@@ -1,12 +1,20 @@
 <?php
+namespace classes;
+
+use classes\db as pf;
+use classes\Utils as u;
+use PDO;
+
 class ReplyRetrieval {
 
 	private $earliest_date;
 	private $db;
 
 	public function __construct() {
-		$this->db = new PDOFactory();
-		$this->earliest_date = Utils::create_timestamp();
+		//$this->db = new PDOFactory();
+		//$this->earliest_date = Utils::create_timestamp();
+		$this->db = new pf();
+		$this->earliest_date = u::create_timestamp();
 	}
 	
 	public function __destruct() {

@@ -1,4 +1,6 @@
 <?php
+namespace classes;
+
 final class Validation {
 
 	private $reply_id;

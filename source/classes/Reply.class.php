@@ -1,4 +1,6 @@
 <?php
+namespace classes;
+
 class Reply extends Post {
 
 	public function __construct() {
