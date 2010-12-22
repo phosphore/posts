@@ -9,6 +9,10 @@ use classes\Pager as Pager;
 use classes\db as db;
 use classes\Topic as Topic;
 use classes\Validation as Validation;
+use classes\XML\TopicXML as TopicXML;
+use classes\XML\ReplyXML as ReplyXML;
+
+use classes\ReplyRetrieval as ReplyRetrieval;
 
 $reply = new Reply();
 
@@ -39,30 +43,15 @@ try {
 
 $topic = new Topic();
 
+$topic_xml = new TopicXML($validation->getPage());
+ 
 while($_topic = $query_topic->fetch(PDO::FETCH_OBJ)) {
-	if($validation->getPage() == 1) {
-		$json_reply->comments[] = sprintf("
-		<div class=\"topic\" id=\"topic_%s\" onmouseover='Reply.show_button(\"topic_%s\")' onmouseout='Reply.hide_button(\"topic_%s\")'>
-		<span class=\"title\">%s</span>
-		<span class=\"date\">%s</span>
-		<span class=\"author_name\">%s</span>
-		<span class=\"message\">%s
-		<button onclick=\"Reply.pre_reply('topic_%s');\" type=\"button\" class=\"reply_btn\">reply</button>
-		</span></div>",
-		$_topic->pk_topic_id,$_topic->pk_topic_id,$_topic->pk_topic_id,$_topic->title, $topic->format_date($_topic->timestamp),$_topic->author,$_topic->message,$_topic->pk_topic_id);
-	} else {
-		$json_reply->comments[] = sprintf("
-		<div class=\"topic\" id=\"topic_%s\">
-		<span class=\"title\">%s</span>
-		<span class=\"date\">%s</span>
-		<span class=\"author_name\">%s</span>
-		<span class=\"message\">%s
-		<button onclick=\"Reply.pre_reply('topic_%s');\" type=\"button\" class=\"reply_btn\">reply</button>
-		</span></div>",
-		$_topic->pk_topic_id,$_topic->title, $topic->format_date($_topic->timestamp),$_topic->author,$_topic->message,$_topic->pk_topic_id);
-	}
+	$topic_xml->build_topic_xml($_topic->pk_topic_id, $_topic->title,
+	$topic->format_date($_topic->timestamp), $_topic->author,$_topic->message);
 }
-
+	
+$json_reply->comments[] = $topic_xml->transform(); 
+    
 $offset = $reply->paging_offset($validation->getPage());
 if($validation->getPage() == 1) {
 	$sql_reply = sprintf("select reply.pk_reply_id, reply.fk_topic_id, reply.pk_reply_id, reply.timestamp, reply.author, reply_to.author AS reply_to, reply.message, reply.parent, reply.fk_reply_id from reply as reply left join reply reply_to on reply.fk_reply_id=reply_to.pk_reply_id where reply.parent IN (select pk_reply_id from reply where fk_reply_id is null and timestamp >= '%s' and fk_topic_id=%s) OR reply.pk_reply_id IN(select pk_reply_id from reply where fk_reply_id is null and timestamp >= '%s' and fk_topic_id=%s) order by reply.position",$validation->getEearliestDate(),$validation->getTopicId(),$validation->getEearliestDate(),$validation->getTopicId());
@@ -77,15 +66,16 @@ try {
 	die();
 }
 
-while($rs = $reply_result->fetch(PDO::FETCH_OBJ)) {
-	if(empty($rs->fk_reply_id)) {
-		$json_reply->comments[] = sprintf("<div id=\"reply_%s\" onmouseover='Reply.show_button(\"reply_%s\")'  onmouseout='Reply.hide_button(\"reply_%s\")' class=\"reply_to_topic\"><span class=\"reply_to_topic_tri\"></span><span class=\"top_tri\"></span><span class=\"date\">%s</span><span class=\"author_name\">%s</span><span class=\"message\">%s<button type=\"button\" class=\"reply_btn\" onclick=\"Reply.pre_reply('reply_%s');\">reply</button></span></div>",
-		$rs->pk_reply_id,$rs->pk_reply_id,$rs->pk_reply_id,$reply->format_date($rs->timestamp),$rs->author,$rs->message,$rs->pk_reply_id);
-	} else {
-		$json_reply->comments[] = sprintf("<div id=\"reply_%s\" onmouseover='Reply.show_button(\"reply_%s\")'  onmouseout='Reply.hide_button(\"reply_%s\")' class=\"reply_to_reply\"><span class=\"reply_to_reply_tri\"></span><span class=\"top_tri\"></span><span class=\"reply_to_author\">@%s</span><span class=\"date\">%s</span><span class=\"author_name\">%s</span><span class=\"message\">%s<button type=\"button\" class=\"reply_btn\" onclick=\"Reply.pre_reply('reply_%s');\">reply</button></span></div>",
-		$rs->pk_reply_id,$rs->pk_reply_id,$rs->pk_reply_id,$rs->reply_to,$reply->format_date($rs->timestamp),$rs->author,$rs->message,$rs->pk_reply_id);
-	}
+$reply_sql = new ReplyRetrieval();
+
+$reply_xml = new ReplyXML();
+ 
+while($result = $reply_result->fetch(PDO::FETCH_OBJ)) {
+    $type = empty($result->fk_reply_id) ? "reply_to_topic" :  "reply_to_reply";
+	$reply_xml->build_reply_xml($result->pk_reply_id, $reply->format_date($result->timestamp), $result->author,$result->message,$result->reply_to,$type);
 }
+	
+$json_reply->comments[] =  $reply_xml->transform(); 
 
 $sql_reply_count = sprintf("select count(*) from reply where fk_topic_id=%s and fk_reply_id is null and timestamp < '%s'",$validation->getTopicId(),$validation->getEearliestDate()); // changed from global
 

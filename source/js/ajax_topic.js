@@ -10,7 +10,7 @@ $(document).ready(function(){
 		if(parseInt($("#current_pg").attr("title")) == 1) {
 			$.ajax({
 				'type' 		: 'POST',
-				'url' 		: 'update_topic.php',
+				'url' 		: '/posts/source/core/update_topic.php',
 				'dataType'  	: 'json',
 				'data' 		: {
 				'type' 		: 'post',
@@ -32,7 +32,7 @@ $(document).ready(function(){
 		$('#error_topic').hide();
 		$.ajax({
 			'type' 		: 'POST',
-			'url' 		: 'post_topic.php',
+			'url' 		: '/posts/source/core/post_topic.php',
 			'dataType'  	: 'json',
 			'data' 		: {
 				'type' 	: 'post',
@@ -58,7 +58,7 @@ function paging_topic(curr_pg, next_pg, earliest_date) {
 	$('#error_topic').hide();
 	$.ajax({
 		'type' 		: 'POST',
-		'url' 		: 'paging_topic.php',
+		'url' 		: '/posts/source/core/paging_topic.php',
 		'dataType'  : 'json',
 		'data' 		: {
 			'next_pg'	: next_pg,

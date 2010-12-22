@@ -1,8 +1,8 @@
 <?php
 namespace classes;
 
-use classes\db as pf;
-use classes\Utils as u;
+use classes\db as db;
+use classes\Utils as Utils;
 use PDO;
 
 class ReplyRetrieval {
@@ -11,10 +11,8 @@ class ReplyRetrieval {
 	private $db;
 
 	public function __construct() {
-		//$this->db = new PDOFactory();
-		//$this->earliest_date = Utils::create_timestamp();
-		$this->db = new pf();
-		$this->earliest_date = u::create_timestamp();
+		$this->db = new db();
+		$this->earliest_date = Utils::create_timestamp();
 	}
 	
 	public function __destruct() {
@@ -47,7 +45,10 @@ class ReplyRetrieval {
 			$return[$i]['author'] = $_reply->author;
 			$return[$i]['message'] = $_reply->message;
 			$return[$i]['reply_to'] = $_reply->reply_to;
-			$return[$i]['fk_reply_id'] = $_reply->fk_reply_id;
+			$return[$i]['type'] = $this->post_type($_reply->fk_reply_id);
+			if(strcmp($this->post_type($_reply->fk_reply_id),"reply_to_topic") == 0) {
+				$this->earliest_date = $_reply->timestamp;
+			}
 			++$i;		
 		}
 		return $return;
@@ -63,8 +64,10 @@ class ReplyRetrieval {
 		}
 	}
 	
-	public function is_reply_to_topic($fk_reply_id) {
-		return empty($fk_reply_id);
+	public function post_type($fk_reply_id) {
+		if(empty($fk_reply_id))
+			return "reply_to_topic";
+		return "reply_to_reply";
 	}
 	
 	public function getEearliestDate() {

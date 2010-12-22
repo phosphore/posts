@@ -8,6 +8,7 @@ use classes\db as db;
 use classes\Topic as Topic;
 use classes\Validation as Validation;
 use classes\Pager as Pager;
+use classes\XML\PostXML as PostXML;
 
 $validation = new Validation();
 if(!(isset($_POST['next_pg'])) || !(isset($_POST['earliest_date'])) || !(isset($_POST['latest_date'])) 
@@ -21,7 +22,6 @@ if(!(isset($_POST['next_pg'])) || !(isset($_POST['earliest_date'])) || !(isset($
 }
 
 $json_reply = new stdClass;
-$json_reply->comments = array();
 $json_reply->paging = array();
 $json_reply->data = array();
 
@@ -54,10 +54,14 @@ try {
 
 $total_pages = $topic->adjust_paging($count);
 
+$topic_xml = new PostXML();
+ 
 while($_topic = $query_topic->fetch(PDO::FETCH_OBJ)) {
-	$json_reply->comments[] = sprintf("<div class=\"topic\" id=\"topic_%s\"><a href=\"reply.php?id=%s\"><span class=\"title\">%s</span></a><span class=\"date\">%s</span><span class=\"author_name\">%s</span></div>",
-	$_topic->pk_topic_id,$_topic->pk_topic_id,$_topic->title,$topic->format_date($_topic->timestamp),$_topic->author);
+		$topic_xml->build_post_xml($_topic->pk_topic_id, $_topic->title,
+		$topic->format_date($_topic->timestamp), $_topic->author);
 }
+
+$json_reply->comments = $topic_xml->transform();
 
 $pager = new Pager();
 $pager->paging($total_pages,$validation->getPage());

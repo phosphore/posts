@@ -48,15 +48,12 @@ try {
 		$error = false;
 		if(strcmp($validation->getType(),"topic") == 0) {
 			$sql_update_position = sprintf("update reply set position=position+1 where fk_topic_id=%s",pg_escape_string($validation->getTopicId()));
-			//$sql_insert_reply = sprintf("INSERT INTO reply VALUES (nextval('reply_pk_reply_id_seq'),'%s',null,localtimestamp,'%s','%s',1,NULL) RETURNING pk_reply_id, timestamp",$validation->getTopicId(),pg_escape_string($reply->getAuthor()),pg_escape_string($reply->getMessage()));
 			$sql_insert_reply = sprintf("INSERT INTO reply (fk_topic_id, fk_reply_id, timestamp, author, message, position, parent) VALUES ('%s',null,localtimestamp,'%s','%s',1,NULL) RETURNING pk_reply_id, timestamp",$validation->getTopicId(),pg_escape_string($reply->getAuthor()),pg_escape_string($reply->getMessage()));
-			
 		} else {
 			$sql_pos_auth = sprintf("select position, author from reply where pk_reply_id=%s",pg_escape_string($validation->getReplyId()));
 			list($position,$reply_to_author) = $db->prepare_and_execute($sql_pos_auth);
 			$sql_update_position = sprintf("update reply set position=position+1 where position > %s and fk_topic_id=%s",$position,pg_escape_string($validation->getTopicId()));
 			$new_position = $position + 1;
-			//$sql_insert_reply = sprintf("INSERT INTO reply VALUES (nextval('reply_pk_reply_id_seq'),%s,%s,localtimestamp,'%s','%s',%s,%s) RETURNING pk_reply_id, timestamp",pg_escape_string($validation->getTopicId()),pg_escape_string($validation->getReplyId()), pg_escape_string($reply->getAuthor()),pg_escape_string($reply->getMessage()),$new_position,pg_escape_string($validation->getParentId()));
 			$sql_insert_reply = sprintf("INSERT INTO reply (fk_topic_id, fk_reply_id, timestamp, author, message, position, parent) VALUES (%s,%s,localtimestamp,'%s','%s',%s,%s) RETURNING pk_reply_id, timestamp",pg_escape_string($validation->getTopicId()),pg_escape_string($validation->getReplyId()), pg_escape_string($reply->getAuthor()),pg_escape_string($reply->getMessage()),$new_position,pg_escape_string($validation->getParentId()));
 			
 		}

@@ -1,4 +1,3 @@
-
 <html>
 <head>
     <title>Posts</title>
@@ -44,30 +43,30 @@
 	require_once("../libs/AutoLoader.php");
   	Autoloader::register();
   
-  	use classes\Pager as p;
-  	use classes\Topic as t;
- 	use classes\TopicRetrieval as tr;
-  
+  	use classes\Pager as Pager;
+  	use classes\Topic as Topic;
+ 	use classes\TopicRetrieval as TopicRetrieval;
+ 	use classes\XML\PostXML as PostXML;
 ?>
 	
 <div id="posts"> 
   <?php 
-    $topic = new t();
-    $pager = new p();
-	$topic_sql = new tr();
+    $topic = new Topic();
+    $pager = new Pager();
+	$topic_sql = new TopicRetrieval();
     $count = $topic_sql->count();
 		
     if($count != 0) {	
       $query = $topic_sql->query_topic_with_limit();
       $_topic = $topic_sql->retrieveTopic($query);
-		
-      for($i = 0; $i < count($_topic); $i++) {
-		echo sprintf("<div class=\"topic\" id=\"topic_%s\">
-		<a href=\"reply.php?id=%s\"><span class=\"title\">%s</span></a>
-		<span class=\"date\">%s</span><span class=\"author_name\">%s</span></div>",
-		$_topic[$i]['pk_topic_id'],$_topic[$i]['pk_topic_id'],$_topic[$i]['title'],$topic->format_date($_topic[$i]['timestamp']),$_topic[$i]['author']);
-      }
-   ?>
+      
+	$post_xml = new PostXML();   
+    for($i = 0; $i < count($_topic); $i++) {
+		$post_xml->build_post_xml($_topic[$i]['pk_topic_id'], $_topic[$i]['title'], $topic->format_date($_topic[$i]['timestamp']), $_topic[$i]['author']);
+	}
+	echo $post_xml->transform();
+      
+  ?>
 </div>
 	
 <div id="paging">

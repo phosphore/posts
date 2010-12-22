@@ -99,11 +99,7 @@ function handle_paging(response) {
 	if (error == true) {
 		window.location.href = CONFIG.BASE_URL;
 	} else {
-		var comments = "";
-		for ( var i = 0; i < response.comments.length; i++) {
-			comments += response.comments[i];
-		}
-		$("#posts").html(comments);
+		$("#posts").html(response.comments);
 		
 		var paging = "";
 		for ( var j = 0; j < response.paging.length; j++) {

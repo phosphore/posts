@@ -1,8 +1,8 @@
 <?php
 namespace classes;
 
-use classes\db as pf;
-use classes\Utils as u;
+use classes\db as db;
+use classes\Utils as Utils;
 use PDO;
 
 class TopicRetrieval {
@@ -12,10 +12,8 @@ class TopicRetrieval {
 	private $db;
 
 	public function __construct() {
-		//$this->db = new PDOFactory();
-		$this->db = new pf();
-		//$this->latest_date = Utils::create_timestamp();
-		$this->latest_date = u::create_timestamp();
+		$this->db = new db();
+		$this->latest_date = Utils::create_timestamp();
 	}
 	
 	public function __destruct() {

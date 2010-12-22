@@ -10,7 +10,7 @@ $(document).ready(function() {
 	$('#post').live('click', function() {
 		$.ajax({
 		  'type': "POST",
-			'url' 		: 'post_reply.php',
+			'url' 		: '/posts/source/core/post_reply.php',
 			'dataType'  	: 'json',
 			'data' 		: {
 			    
@@ -39,7 +39,7 @@ $(document).ready(function() {
 function update() { 
 	$.ajax({
 		'type' 		: 'POST',
-		'url' 		: 'update_reply.php',
+		'url' 		: '/posts/source/core/update_reply.php',
 		'dataType'  	: 'json',
 		'data' 		: {
 		'update_data': UpdateReplies.pack_update()
@@ -57,7 +57,7 @@ function paging_reply(topic_id, current_page, next_page, earliest_date) {
 	Reply.reset();
 	$.ajax({
 		'type' 		: 'POST',
-		'url' 		: 'paging_reply.php',
+		'url' 		: '/posts/source/core/paging_reply.php',
 		'dataType'  	: 'json',
 		'data' 		: {
 		'current_pg'	: current_page,
