@@ -82,7 +82,7 @@
 
 		<xsl:for-each select="/posts/post">
 			<div class="topic" id="{concat('topic_',@id)}">
-				<a href="{concat('reply/',@id)}">
+				<a href="{concat('reply/',@id)}/">
 					<span class="title">
 						<xsl:value-of select="@title" />
 					</span>

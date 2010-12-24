@@ -53,25 +53,37 @@ function update() {
 	});
 }
 
-function paging_reply(topic_id, current_page, next_page, earliest_date) {
+$(window).bind('hashchange', function (e) {
+    var current_page = parseInt(e.getState("current_page")) || $("#current_pg").attr("title");
+    var next_page = parseInt(e.getState("next_page")) || 1;
+    var earliest_date = e.getState("earliest_date") || $("#earliest_date").attr("title");
+  	var topic_id = parseInt(e.getState("topic_id")) || $("#topic_id").attr("title");
+  	
 	Reply.reset();
 	$.ajax({
 		'type' 		: 'POST',
 		'url' 		: '/posts/source/core/paging_reply.php',
 		'dataType'  	: 'json',
 		'data' 		: {
-		'current_pg'	: current_page,
-		'next_page' 	: next_page,
-		'earliest_date' : earliest_date,
-		'topic_id' 	: topic_id
-	},
-	'success' 	: function(data){
-		Reply.handle_paging_reply(data);
-	},
-	'error' 	: function() {
-		alert("Reply paging HttpRequest failed");
-	}
+			'current_pg'	: current_page,
+			'next_page' 	: next_page,
+			'earliest_date' : earliest_date,
+			'topic_id' 	: topic_id
+		},
+		'success' 	: function(data){
+			Reply.handle_paging_reply(data);
+		},
+		'error' 	: function() {
+			alert("Reply paging HttpRequest failed");
+		}
 	});
+  
+});
+
+$(window).trigger('hashchange');
+
+function paging_reply(topic_id, current_page, next_page, earliest_date) {
+	jQuery.bbq.pushState({ topic_id: topic_id, current_page: current_page,next_page: next_page, earliest_date: earliest_date});
 }
 
 return {

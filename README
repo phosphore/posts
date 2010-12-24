@@ -6,3 +6,5 @@ Topics and replies are updated on the page dynamically at specified intervals.
 It's written in PHP, Javascript (with JQuery) and PostgreSQL.   
 
 See screenshots.
+
+Don't forget the .htaccess file in the core directory

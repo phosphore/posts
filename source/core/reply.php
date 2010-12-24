@@ -25,9 +25,10 @@ if(!(isset($_GET['id'])) || !($validation->isValidTopicId($_GET['id']))) {
     <script src="/posts/source/config/CONFIG.js" type="text/javascript"></script>
     <script src="/posts/source/js/utils.js" type="text/javascript"></script>
     <script src="/posts/source/libs/json2.js" type="text/javascript"></script>
+    <script src="/posts/source/libs/jquery.ba-bbq.min.js" type="text/javascript"></script>
     <script src="/posts/source/js/update_replies.js" type="text/javascript"></script>
-    <script src="/posts/source/js/ajax_reply.js" type="text/javascript"></script>
     <script src="/posts/source/js/reply.js" type="text/javascript"></script>
+    <script src="/posts/source/js/ajax_reply.js" type="text/javascript"></script>
     <link rel="stylesheet" href="/posts/source/css/common.css" type="text/css" />
     <link rel="stylesheet" href="/posts/source/css/reply.css" type="text/css" />
     <link rel="stylesheet" href="/posts/source/css/paging.css" type="text/css" />
