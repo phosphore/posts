@@ -24,10 +24,18 @@ if($topic->error()) {
 
 $db = new db();
 
-$sql_topic = sprintf("INSERT INTO topic (author,title,message,timestamp) VALUES ('%s','%s','%s',localtimestamp) RETURNING pk_topic_id, timestamp",pg_escape_string($topic->getAuthor()),pg_escape_string($topic->getTitle()),pg_escape_string($topic->getMessage()));
+$sql_topic = sprintf("INSERT INTO topic (author,title,message,timestamp) VALUES ('%s','%s','%s',localtimestamp)",pg_escape_string($topic->getAuthor()),pg_escape_string($topic->getTitle()),pg_escape_string($topic->getMessage()));
 
 try {
-	list($id, $timestamp) = $db->prepare_and_execute($sql_topic);
+	$db->get_connection()->beginTransaction();
+	
+	$db->get_connection()->query($sql_topic);
+	$id = $db->get_connection()->lastInsertId("topic_pk_topic_id_seq");
+	
+	$timestamp_query = sprintf("select timestamp from topic where pk_topic_id=%s",$id);
+	list($timestamp) = $db->get_connection()->query($timestamp_query)->fetch();
+	
+	$db->get_connection()->commit();
 } catch (PDOException $e) {
 	if(DEBUG) echo $e->getMessage();
 	die();
