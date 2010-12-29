@@ -73,7 +73,7 @@ function create_topic(response,i) {
 		date_span = $("<span></span>").attr("class","date").append(date);
 	}
 
-	var link = $("<a></a>").attr("href","reply.php?id=" + id);
+	var link = $("<a></a>").attr("href","/posts/source/core/reply/" + id + "/");
 	$(link).append(title_span);
 	$(div_topic).append(link);
 	$(div_topic).append(date_span); 
