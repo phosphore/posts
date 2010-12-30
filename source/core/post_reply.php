@@ -41,7 +41,7 @@ try {
 	} else {
 		$sql_post_exists = sprintf("select count(*) from reply where pk_reply_id=%s",$validation->getReplyId());
 	}
-	list($count) = $db->prepare_and_execute($sql_post_exists);
+	list($count) = $db->get_connection()->query($sql_post_exists)->fetch();
 	
 	if($count != 0) {
 		
@@ -51,7 +51,8 @@ try {
 			$sql_insert_reply = sprintf("INSERT INTO reply (fk_topic_id, fk_reply_id, timestamp, author, message, position, parent) VALUES ('%s',null,localtimestamp,'%s','%s',1,NULL)",$validation->getTopicId(),pg_escape_string($reply->getAuthor()),pg_escape_string($reply->getMessage()));	
 		} else {
 			$sql_pos_auth = sprintf("select position, author from reply where pk_reply_id=%s",pg_escape_string($validation->getReplyId()));
-			list($position,$reply_to_author) = $db->prepare_and_execute($sql_pos_auth);
+			list($position,$reply_to_author) = $db->get_connection()->query($sql_pos_auth)->fetch();
+			
 			$sql_update_position = sprintf("update reply set position=position+1 where position > %s and fk_topic_id=%s",$position,pg_escape_string($validation->getTopicId()));
 			$new_position = $position + 1;
 			$sql_insert_reply = sprintf("INSERT INTO reply (fk_topic_id, fk_reply_id, timestamp, author, message, position, parent) VALUES (%s,%s,localtimestamp,'%s','%s',%s,%s)",pg_escape_string($validation->getTopicId()),pg_escape_string($validation->getReplyId()), pg_escape_string($reply->getAuthor()),pg_escape_string($reply->getMessage()),$new_position,pg_escape_string($validation->getParentId()));

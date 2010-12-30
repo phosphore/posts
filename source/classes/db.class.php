@@ -27,12 +27,6 @@ class db {
 		return $this->connection;
 	}
 
-	public function prepare_and_execute($sql) {
-		$query = $this->connection->prepare($sql);
-		$query->execute();
-		return $query->fetch();
-	}
-
 }
 
 ?>
