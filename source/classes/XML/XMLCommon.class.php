@@ -37,6 +37,7 @@ class XMLCommon {
 	public function transform() {
 		$this->xsl_doc->load('/posts/source/xslt/posts.xsl');
 		$this->xsl->importStylesheet($this->xsl_doc);
+		//$this->doc->save("/posts/source/xml/xml.xml");
 		return $this->xsl->transformToXML($this->doc);
 	}
 	

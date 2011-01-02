@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+#content {
+	display: none;
+}
+
 .reply_to_topic {
 	border: 2px solid #89CFFD;
 	padding: 6px;

@@ -36,6 +36,10 @@ if(!(isset($_GET['id'])) || !($validation->isValidTopicId($_GET['id']))) {
 
 <body>
 
+<noscript>
+This page needs javascript to work properly.  You browser either has javascript disabled or does not support it.
+</noscript>
+
 <div id="content">
 
 <span class="new_post"><a href="<?php echo BASE_URL ?>">Return to topics</a></span>

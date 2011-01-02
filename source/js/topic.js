@@ -1,5 +1,5 @@
 var Topic = function() {
-
+	
 function retrieve_curr_topics() {
 	var topics = new Array();
 	$(".topic").each(function(i, E) {

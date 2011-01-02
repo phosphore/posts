@@ -1,4 +1,8 @@
 @CHARSET "UTF-8";
+	
+#content {
+	display: none;
+}
 
 .topic { 
 	border: 2px solid #333;

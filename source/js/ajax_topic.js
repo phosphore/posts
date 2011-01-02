@@ -3,6 +3,7 @@ var AjaxTopic = function() {
 $(document).ready(function(){ 
 	
 	window.onload = function() {
+		$("#content").show();
 		setInterval(update_topic, CONFIG.TOPIC_UPDATE_INTERVAL);
 	};
 	

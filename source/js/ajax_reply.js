@@ -3,6 +3,7 @@ var AjaxReply = function() {
 $(document).ready(function() { 
 	
 	window.onload = function() {
+		$("#content").show();
 		setInterval(update, CONFIG.REPLY_UPDATE_INTERVAL);  
 		Reply.reply_struct.okay= true;
 	};

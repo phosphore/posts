@@ -1,3 +1,13 @@
+<?php 
+	require_once("../libs/AutoLoader.php");
+  	Autoloader::register();
+  
+  	use classes\Pager as Pager;
+  	use classes\Topic as Topic;
+ 	use classes\TopicRetrieval as TopicRetrieval;
+ 	use classes\XML\PostXML as PostXML;
+?>
+
 <html>
 <head>
     <title>Posts</title>
@@ -14,8 +24,13 @@
 
 <body>
 
-<div id="wrapper">
+<noscript>
+This page needs javascript to work properly.  You browser either has javascript disabled or does not support it.
+</noscript>
 
+<div id="content">
+
+<div id="wrapper">
 <div id="form">
     <fieldset>
       <legend>Create a new topic</legend>
@@ -35,22 +50,10 @@
       <p><input type="button" name="submit" id="submit" value="Post" /></p>
     </fieldset>
 </div>
-
 </div>
 
-<div id="content">
-<?php 
-	require_once("../libs/AutoLoader.php");
-  	Autoloader::register();
-  
-  	use classes\Pager as Pager;
-  	use classes\Topic as Topic;
- 	use classes\TopicRetrieval as TopicRetrieval;
- 	use classes\XML\PostXML as PostXML;
-?>
-	
 <div id="posts"> 
-  <?php 
+<?php 
     $topic = new Topic();
     $pager = new Pager();
 	$topic_sql = new TopicRetrieval();
@@ -64,9 +67,9 @@
     for($i = 0; $i < count($_topic); $i++) {
 		$post_xml->build_post_xml($_topic[$i]['pk_topic_id'], $_topic[$i]['title'], $topic->format_date($_topic[$i]['timestamp']), $_topic[$i]['author']);
 	}
+	
 	echo $post_xml->transform();
-      
-  ?>
+?>
 </div>
 	
 <div id="paging">
@@ -91,11 +94,11 @@
    }
   ?>
 </div>
-	
+
 <div id="data">
   <?php
-    echo "<div id='latest_date' title='" .$topic_sql->getLatestDate() ."'><div>";
-    echo "<div id='current_pg' title='1'><div>";
+    echo "<div id='latest_date' title='" .$topic_sql->getLatestDate() ."'></div>";
+    echo "<div id='current_pg' title='1'></div>";
   ?>
 </div>
 

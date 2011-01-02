@@ -6,13 +6,22 @@
 
 	<xsl:template match="/">
 
+		<xsl:for-each select="/posts/post">
+			<div id="{concat('topic_',@id)}" class="topic">
+				<span class="title"><a href="{concat('reply/',@id)}/"><xsl:value-of select="@title" /></a></span>
+				<span class="date"><xsl:value-of select="@date" /></span>
+				<span class="author_name"><xsl:value-of select="@author" /></span>
+			</div>
+			<xsl:text>&#10;</xsl:text>
+		</xsl:for-each>
+		
 		<xsl:for-each select="/posts/topic">
 			<div id="{concat('topic_',@id)}" class="topic"
 				onmouseover="Reply.show_button('{concat('topic_',@id)}')"
 				onmouseout="Reply.hide_button('{concat('topic_',@id)}')">
 				<span class="title">
 					<xsl:value-of select="@title" />
-				</span>
+				</span>				
 				<span class="date">
 					<xsl:value-of select="@date" />
 				</span>
@@ -33,11 +42,12 @@
 
 			<xsl:choose>
 				<xsl:when test="@type = 'reply_to_topic'">
+				
 					<div id="{concat('reply_',@id)}" class="reply_to_topic"
 						onmouseover="Reply.show_button('{concat('reply_',@id)}')"
 						onmouseout="Reply.hide_button('{concat('reply_',@id)}')">
 						<span class="reply_to_topic_tri"></span>
-						<span class="top_tri"></span>
+						<span class="top_tri"></span>						
 						<span class="date">
 							<xsl:value-of select="@date" />
 						</span>
@@ -78,22 +88,6 @@
 				</xsl:otherwise>
 			</xsl:choose>
 
-		</xsl:for-each>
-
-		<xsl:for-each select="/posts/post">
-			<div class="topic" id="{concat('topic_',@id)}">
-				<a href="{concat('reply/',@id)}/">
-					<span class="title">
-						<xsl:value-of select="@title" />
-					</span>
-				</a>
-				<span class="date">
-					<xsl:value-of select="@date" />
-				</span>
-				<span class="author_name">
-					<xsl:value-of select="@author" />
-				</span>
-			</div>
 		</xsl:for-each>
 
 	</xsl:template>
