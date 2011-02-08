@@ -35,9 +35,9 @@ body {
 
 .author_name {
 	float: right;
-	margin-right: 7px;
+	margin-right: 8px;
 	border-right: 1px solid #bbb;
-	padding-right: 4px;
+	padding-right: 8px;
 }
 
 .date {

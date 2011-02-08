@@ -3,11 +3,11 @@
  	<xsl:output method="html"/>
 		
     <xsl:template match="/posts/pager">
-    	<xsl:call-template name="performLoop" />
+    	<xsl:call-template name="loop" />
     </xsl:template>
 
-    <xsl:template name="performLoop">
-    	<xsl:param name="loopMax" select="@total_pages" />
+    <xsl:template name="loop">
+    	<xsl:param name="total_pages" select="@total_pages" />
     	<xsl:param name="i" select="@start_pg" />
   			
  			<xsl:choose>
@@ -24,8 +24,8 @@
 				</xsl:otherwise>
 			</xsl:choose>
  			
-    		<xsl:if test="$i &lt; $loopMax">
-    			<xsl:call-template name="performLoop">
+    		<xsl:if test="$i &lt; $total_pages">
+    			<xsl:call-template name="loop">
     				<xsl:with-param name="i" select="$i + 1" />
     			</xsl:call-template>
     		</xsl:if>

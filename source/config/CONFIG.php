@@ -2,7 +2,7 @@
 const PDO_DB_TYPE = "pgsql";
 const PDO_DB_HOST = "";
 const PDO_DB_USER = "";
-const PDO_DB_NAME = "project";
+const PDO_DB_NAME = "";
 const PDO_DB_PASSWORD= "";
 
 const BASE_URL = "http://localhost/posts/source/core/";

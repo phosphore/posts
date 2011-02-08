@@ -53,7 +53,7 @@ abstract class Post {
 
 	protected function format_date($timestamp) {
 		$date = new DateTime(date($timestamp));
-		return $date->format("M y, g:ia");
+		return $date->format("M j, g:ia");
 	}
 
 }

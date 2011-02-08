@@ -12,7 +12,6 @@
 				<span class="date"><xsl:value-of select="@date" /></span>
 				<span class="author_name"><xsl:value-of select="@author" /></span>
 			</div>
-			<xsl:text>&#10;</xsl:text>
 		</xsl:for-each>
 		
 		<xsl:for-each select="/posts/topic">
