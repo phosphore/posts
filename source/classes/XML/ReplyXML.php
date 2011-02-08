@@ -1,14 +1,9 @@
 <?php
-namespace classes\XML;
-
-use DOMElement;
-use DOMDocument;
-use XSLTProcessor;
-
 class ReplyXML extends XMLCommon {
 
 	public function __construct() {
 		parent::__construct();
+		$this->stylesheet = "/posts/source/xslt/posts.xsl";
 	}
 
 	public function build_reply_xml($id,$date,$author,$message, $reply_to, $type) {
@@ -20,10 +15,15 @@ class ReplyXML extends XMLCommon {
 		}
 		$this->post->setAttribute('type', $type);
 	}
-
-	public function transform() {
-		return parent::transform();
+	
+	public function appendTopic($node) {
+		$this->doc->appendChild($this->doc->importNode($node,true));
 	}
+	
+	public function transform() {
+		return parent::transform($this->stylesheet);
+	}
+	
 }
 
 ?>

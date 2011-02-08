@@ -2,13 +2,6 @@
 header("Content-Type: application/json; charset=UTF-8");
 
 require_once("../libs/AutoLoader.php");
-Autoloader::register();
-
-use classes\db as db;
-use classes\Topic as Topic;
-use classes\Validation as Validation;
-use classes\Pager as Pager;
-use classes\XML\PostXML as PostXML;
 
 $validation = new Validation();
 if(!(isset($_POST['next_pg'])) || !(isset($_POST['earliest_date'])) || !(isset($_POST['latest_date'])) 
@@ -22,8 +15,6 @@ if(!(isset($_POST['next_pg'])) || !(isset($_POST['earliest_date'])) || !(isset($
 }
 
 $json_reply = new stdClass;
-$json_reply->paging = array();
-$json_reply->data = array();
 
 $db = new db();
 
@@ -65,20 +56,14 @@ $json_reply->comments = $topic_xml->transform();
 
 $pager = new Pager();
 $pager->paging($total_pages,$validation->getPage());
-$i = $pager->start_page();
-$pages = $pager->total_pages();
 
-while($i <= $pages) {
-	if ($i==$validation->getPage()) {
-		$json_reply->paging[] = "<button type=\"button\" id=\"curr_pg\">$i</button>";
-	} else {
-		$json_reply->paging[] = "<button class=\"paging_btns\" onClick=\"AjaxTopic.paging_topic(" . $validation->getPage() .",$i,'" . $validation->getEearliestDate() ."');\">$i</button>";
-	}
-	$i++;
-}
+$xml_pager = new TopicXMLPager();
+$xml_pager->build_pager($pager->start_page(),$validation->getPage(), $pager->total_pages(), $validation->getEearliestDate());
+$json_reply->paging= $xml_pager->transform_pager();
 
-$json_reply->data[] = "<div id=\"latest_date\" title='" . $validation->getLatestDate() ."'></div>";
-$json_reply->data[] = "<div id='current_pg' title=" .$validation->getPage() ."></div>";
+$data = new TopicXMLData();
+$data->build_data($validation->getLatestDate(), $validation->getPage());
+$json_reply->data = $data->transform_data();
 
 if($query_topic->rowCount() == 0) {
 	$arr = array();

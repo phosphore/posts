@@ -1,8 +1,4 @@
 <?php
-namespace classes;
-
-use PDO;
-
 class db {
 
 	private $connection = null;

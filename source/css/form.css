@@ -1,5 +1,16 @@
 @CHARSET "UTF-8";
 
+#form {
+	padding: 18px;
+	background-color: #5395b7;
+	margin-bottom: 20px;
+	border: 2px solid #333;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	color: #fff;
+}
+	
 #form legend {
 	text-align: left;
 	border-bottom: 1px solid #333;
@@ -17,18 +28,27 @@
 
 #form label {
 	display: inline-block;
-	width: 90px;
+	width: 320px;
 	vertical-align: top;
 	padding-top: 1px;
 }
 
 #form .text {
-	width: 300px;
+	width: 320px;
 }
 
+#form input {
+	border: 2px solid #333;
+	padding: 4px;
+	font-size: 16px;
+}
+	
 #form textarea {
 	height: 100px;
-	width: 300px;
+	width: 320px;
+	border: 2px solid #333;
+	padding: 4px;
+	font-size: 16px;
 }
 
 #form .required {
@@ -38,6 +58,21 @@
 
 #wrapper {
 	margin: 0px auto;
-	width: 420px;
-	text-align: right;
+	width: 380px;
+	text-align: left;
+}
+
+#form #submit {
+	color: #606060;
+	border: solid 1px #b7b7b7;
+	background: #fff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+	background: -moz-linear-gradient(top,  #fff,  #ededed);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+	cursor: pointer;
+	text-decoration: none;
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	font-weight: bold;
 }

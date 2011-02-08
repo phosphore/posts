@@ -1,8 +1,4 @@
 <?php
-namespace classes;
-
-use DateTime;
-
 final class Utils {
 
 	public static function build_query($reply_ids) {

@@ -1,5 +1,10 @@
 @CHARSET "UTF-8";
 
+#content {
+	width: 800px;
+	margin: 0px auto;
+}
+
 body {
 	height: 101%;
 	font-family: "sans-serif, DejaVu Sans";
@@ -8,17 +13,18 @@ body {
 
 #posts {
 	margin: 0 auto;
-	width: 800px;
-	background-color: #ebebeb;
+	width: 780px;
+	background-color: #e5e5e5;
 	font-size: 12px;
 	display: inline-block;
+	text-align: center;
+	padding: 20px;
 }
 
 .date_new {
 	font-weight: bold;
 	float: right;
 	color: red;
-	font-size: 10px;
 	font-style: italic;
 }
 
@@ -32,13 +38,11 @@ body {
 	margin-right: 7px;
 	border-right: 1px solid #bbb;
 	padding-right: 4px;
-	font-size: 10px;
 }
 
 .date {
 	float: right;
 	color: #bbb;
-	font-size: 10px;
 	font-style: italic;
 	
 }

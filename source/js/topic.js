@@ -101,18 +101,9 @@ function handle_paging(response) {
 	} else {
 		$("#posts").html(response.comments);
 		
-		var paging = "";
-		for ( var j = 0; j < response.paging.length; j++) {
-			paging += response.paging[j];
-		}
-		
-		$("#paging").html(paging);
-		var data = "";
-		for ( var s = 0; s < response.data.length; s++) {
-			data += response.data[s];
-		}
-		$("#data").html(data);
-		
+		$("#paging").html(response.paging);
+
+		$("#data").html(response.data);
 	}
 }
 

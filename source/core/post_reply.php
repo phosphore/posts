@@ -2,12 +2,6 @@
 header("Content-Type: application/json; charset=UTF-8");
 
 require_once("../libs/AutoLoader.php");
-Autoloader::register();
-
-use classes\db as db;
-use classes\Validation as Validation;
-use classes\Post as Post;
-use classes\Reply as Reply;
 
 $validation = new Validation();
 if(!(isset($_POST['topic_id'])) || !(isset($_POST['reply_id'])) || !(isset($_POST['parent_id']))

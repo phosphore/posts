@@ -2,17 +2,6 @@
 header("Content-Type: application/json; charset=UTF-8");
 
 require_once("../libs/AutoLoader.php");
-Autoloader::register();
-
-use classes\Reply as Reply;
-use classes\Pager as Pager;
-use classes\db as db;
-use classes\Topic as Topic;
-use classes\Validation as Validation;
-use classes\XML\TopicXML as TopicXML;
-use classes\XML\ReplyXML as ReplyXML;
-
-use classes\ReplyRetrieval as ReplyRetrieval;
 
 $reply = new Reply();
 
@@ -28,9 +17,6 @@ if(!(isset($_POST['topic_id'])) || !(isset($_POST['earliest_date'])) || !(isset(
 }
 
 $json_reply = new stdClass;
-$json_reply->comments = array();
-$json_reply->paging = array();
-$json_reply->data = array();
 
 $db = new db();
 
@@ -46,11 +32,14 @@ $topic = new Topic();
 $topic_xml = new TopicXML($validation->getPage());
  
 while($_topic = $query_topic->fetch(PDO::FETCH_OBJ)) {
-	$topic_xml->build_topic_xml($_topic->pk_topic_id, $_topic->title,
-	$topic->format_date($_topic->timestamp), $_topic->author,$_topic->message);
+	$topic_xml->build_topic_xml(
+	$_topic->pk_topic_id, 
+	$_topic->title,
+	$topic->format_date($_topic->timestamp), 
+	$_topic->author,
+	$_topic->message
+	);
 }
-	
-$json_reply->comments[] = $topic_xml->transform(); 
     
 $offset = $reply->paging_offset($validation->getPage());
 if($validation->getPage() == 1) {
@@ -72,10 +61,17 @@ $reply_xml = new ReplyXML();
  
 while($result = $reply_result->fetch(PDO::FETCH_OBJ)) {
     $type = empty($result->fk_reply_id) ? "reply_to_topic" :  "reply_to_reply";
-	$reply_xml->build_reply_xml($result->pk_reply_id, $reply->format_date($result->timestamp), $result->author,$result->message,$result->reply_to,$type);
+	$reply_xml->build_reply_xml(
+	$result->pk_reply_id, 
+	$reply->format_date($result->timestamp), 
+	$result->author,
+	$result->message,
+	$result->reply_to,$type
+	);
 }
-	
-$json_reply->comments[] =  $reply_xml->transform(); 
+
+$reply_xml->appendTopic($topic_xml->retrieveFirstChild());
+$json_reply->comments =  $reply_xml->transform(); 
 
 $sql_reply_count = sprintf("select count(*) from reply where fk_topic_id=%s and fk_reply_id is null and timestamp < '%s'",$validation->getTopicId(),$validation->getEearliestDate()); // changed from global
 
@@ -91,21 +87,14 @@ $total_pages = $reply->adjust_paging($count);
 
 $pager = new Pager();
 $pager->paging($total_pages,$validation->getPage());
-$i = $pager->start_page();
-$pages = $pager->total_pages();
 
-while($i <= $pages) {
-	if ($i==$validation->getPage()) {
-		$json_reply->paging[] = "<button type=\"button\" id=\"curr_pg\">$i</button>";
-	} else {
-		$json_reply->paging[] = "<button class=\"paging_btns\" onClick=\"AjaxReply.paging_reply(" . $validation->getTopicId() . "," . $validation->getPage() . ",$i,'" .$validation->getEearliestDate() ."')\">$i</button>";
-	}
-	$i++;
-}
+$xml_pager = new ReplyXMLPager();
+$xml_pager->build_pager($validation->getTopicId(), $pager->start_page(), $validation->getPage(), $pager->total_pages(), $validation->getEearliestDate());
+$json_reply->paging = $xml_pager->transform_pager();
 
-$json_reply->data[] = "<div id='current_pg' title=" . $validation->getPage() . "></div>";
-$json_reply->data[] = "<div id='topic_id' title=" . $validation->getTopicId() . "></div>";
-$json_reply->data[] = "<div id=\"earliest_date\" title='" . $validation->getEearliestDate() . "'></div>";
+$data = new ReplyXMLData();
+$data->build_data($validation->getTopicId(), $validation->getEearliestDate(), $validation->getPage());
+$json_reply->data = $data->transform_data();
 
 if($reply_result->rowCount() == 0) {
 	$no_result = array();

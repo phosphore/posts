@@ -1,11 +1,5 @@
 <?php 
 	require_once("../libs/AutoLoader.php");
-  	Autoloader::register();
-  
-  	use classes\Pager as Pager;
-  	use classes\Topic as Topic;
- 	use classes\TopicRetrieval as TopicRetrieval;
- 	use classes\XML\PostXML as PostXML;
 ?>
 
 <html>
@@ -33,7 +27,7 @@ This page needs javascript to work properly.  You browser either has javascript 
 <div id="wrapper">
 <div id="form">
     <fieldset>
-      <legend>Create a new topic</legend>
+      <legend>Create a New Topic</legend>
       <div id="error_topic" style="display: none"></div>
       <p>
 	<label for="author"><span class="required">*</span> Name:</label> 
@@ -47,58 +41,51 @@ This page needs javascript to work properly.  You browser either has javascript 
 	 <label for="msg"><span class="required">*</span> Message:</label> 
 	 <textarea rows="1" cols="1" id="msg" name="msg"></textarea>
       </p>
-      <p><input type="button" name="submit" id="submit" value="Post" /></p>
+      <input type="button" name="submit" id="submit" value="Post" />
     </fieldset>
 </div>
 </div>
 
-<div id="posts"> 
+<div id="posts">
 <?php 
-    $topic = new Topic();
-    $pager = new Pager();
-	$topic_sql = new TopicRetrieval();
-    $count = $topic_sql->count();
+$topic = new Topic();
+$pager = new Pager();
+$topic_sql = new TopicRetrieval();
+$count = $topic_sql->count();
 		
-    if($count != 0) {	
-      $query = $topic_sql->query_topic_with_limit();
-      $_topic = $topic_sql->retrieveTopic($query);
+if($count != 0) {	
+	$query = $topic_sql->query_topic_with_limit();
+	$_topic = $topic_sql->retrieveTopic($query);
       
 	$post_xml = new PostXML();   
-    for($i = 0; $i < count($_topic); $i++) {
+	for($i = 0; $i < count($_topic); $i++) {
 		$post_xml->build_post_xml($_topic[$i]['pk_topic_id'], $_topic[$i]['title'], $topic->format_date($_topic[$i]['timestamp']), $_topic[$i]['author']);
 	}
 	
 	echo $post_xml->transform();
+	unset($post_xml);
 ?>
 </div>
-	
+
 <div id="paging">
-  <?php
+<?php
+  	$xml_pager = new TopicXMLPager();
     $total_pages = $topic->total_pages($count); 
+   	$pager->paging($total_pages,1);
 		
-    $pager->paging($total_pages,1);
-    $i = $pager->start_page();
-    $pages = $pager->total_pages();
-		
-    if($pages != 1) {
-      while($i <= $pages) {
-		if ($i==1) {
-	  		echo "<button id=\"curr_pg\" type=\"button\">$i</button>";
-		} else {
-	  		echo "<button class=\"paging_btns\" type=\"button\" onClick=\"AjaxTopic.paging_topic(1,$i,'" . $topic_sql->getEarliestDate() ."');\">$i</button>";
-		}
-		$i++;
-      }
-    }
-		
-   }
-  ?>
+    $xml_pager->build_pager(1,1, $pager->total_pages(), $topic_sql->getEarliestDate());
+    
+    echo $xml_pager->transform_pager();		
+}
+?>
 </div>
+
 
 <div id="data">
   <?php
-    echo "<div id='latest_date' title='" .$topic_sql->getLatestDate() ."'></div>";
-    echo "<div id='current_pg' title='1'></div>";
+   $data = new TopicXMLData();
+   $data->build_data($topic_sql->getLatestDate(), 1);
+   echo $data->transform_data();
   ?>
 </div>
 

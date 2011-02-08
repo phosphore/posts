@@ -1,19 +1,24 @@
 <?php
+require_once '../config/CONFIG.php';
+
 final class Autoloader {
 
 	static public function register() {
-		if (file_exists($file = "../config/CONFIG.php")) {
-			require $file;
-		}
-		spl_autoload_register(array(new self, 'autoload'));
+		spl_autoload_register(array(new self, 'load'));
 	}
 
-	static public function autoload($class) {	
-		if (file_exists($file = "../" . str_replace('\\', '/', $class) . '.class.php')) {
-			require $file;
-		}
+	public static function load($class) {
+	 $paths = explode(PATH_SEPARATOR, get_include_path());
+
+	 foreach($paths as $path) {
+	 	if(file_exists($file = $path.'/'.$class.'.php')) {
+	 		require_once($file);
+	 	}
+	 }
+
 	}
-	
+
 }
 
+Autoloader::register();
 ?>

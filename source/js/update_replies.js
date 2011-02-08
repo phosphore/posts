@@ -210,7 +210,7 @@ function mark_reply_removed(updates) {
 				$("#post").remove();
 				$(next_reply).attr("class","removed_reply_to_reply");
 				$(next_reply).children(':first-child').attr("class","reply_to_reply_removed_tri");
-			}	
+			}
 		}
 	}
 	

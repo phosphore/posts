@@ -1,8 +1,4 @@
 <?php
-namespace classes;
-
-use DateTime;
-
 abstract class Post {
 
 	abstract protected function total_pages($total_pgs); 
@@ -57,7 +53,7 @@ abstract class Post {
 
 	protected function format_date($timestamp) {
 		$date = new DateTime(date($timestamp));
-		return $date->format("d.m.y g:ia");
+		return $date->format("M y, g:ia");
 	}
 
 }

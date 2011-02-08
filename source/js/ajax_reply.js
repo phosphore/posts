@@ -2,11 +2,11 @@ var AjaxReply = function() {
 	
 $(document).ready(function() { 
 	
-	window.onload = function() {
+	$(window).load(function() {
 		$("#content").show();
 		setInterval(update, CONFIG.REPLY_UPDATE_INTERVAL);  
 		Reply.reply_struct.okay= true;
-	};
+	});
 	
 	$('#post').live('click', function() {
 		$.ajax({

@@ -1,19 +1,21 @@
 @CHARSET "UTF-8";
 	
-#content {
-	display: none;
-}
-
 .topic { 
 	border: 2px solid #333;
 	padding: 6px;
 	float: left;
-	width: 100%;
+	width: 760px;
 	background-color: #fff;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	margin-top: 15px;
+	font-size: 18px;
+}
+
+.topic a:visited, a { 
+	color: #000;
+	text-decoration: none;
 }
 
 #error_topic {

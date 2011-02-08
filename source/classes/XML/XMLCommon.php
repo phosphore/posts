@@ -1,11 +1,5 @@
 <?php
-namespace classes\XML;
-
-use DOMElement;
-use DOMDocument;
-use XSLTProcessor;
-
-class XMLCommon {
+abstract class XMLCommon {
 	
 	protected $doc;
 	protected $root;
@@ -13,6 +7,7 @@ class XMLCommon {
 	protected $xsl;
 	protected $post;
 	protected $node_name = "post";
+	protected $stylesheet = "";
 	
 	public function __construct() {
 		$this->root = new DOMElement('posts');
@@ -26,7 +21,7 @@ class XMLCommon {
 		$this->node_name = $name;
 	}
 	
-	public function build_xml($id,$date,$author) {
+	protected function build_xml($id,$date,$author) {
 		$this->post = new DOMElement($this->node_name);
 		$this->root->appendChild($this->post);
 		$this->post->setAttribute('id', $id);
@@ -34,11 +29,15 @@ class XMLCommon {
 		$this->post->setAttribute('author', $author);
 	}
 	
-	public function transform() {
-		$this->xsl_doc->load('/posts/source/xslt/posts.xsl');
+	protected function transform() {
+		$this->xsl_doc->load($this->stylesheet);
 		$this->xsl->importStylesheet($this->xsl_doc);
-		//$this->doc->save("/posts/source/xml/xml.xml");
 		return $this->xsl->transformToXML($this->doc);
+	}
+
+	protected function saveXML($xml) {
+		$this->doc->formatOutput = TRUE;
+		$this->doc->save($xml);
 	}
 	
 }

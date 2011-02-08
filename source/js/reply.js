@@ -169,26 +169,11 @@ function handle_paging_reply(response) {
 	if (error == true) {
 		window.location.href = CONFIG.REPLY_PAGE + id;
 	} else {
-		var comments = "";
-		for ( var i = 0; i < response.comments.length; i++) {
-			comments += response.comments[i];
-		}
-	
-		$("#posts").html(comments);
-		
-		var paging = "";
-		for ( var j = 0; j < response.paging.length; j++) {
-			paging += response.paging[j];
-		}
+		$("#posts").html(response.comments);
 
-		$("#paging").html(paging);
+		$("#paging").html(response.paging);
 
-		var data = "";
-		for ( var k = 0; k < response.data.length; k++) {
-			data += response.data[k];
-		}
-		
-		$("#data").html(data);
+		$("#data").html(response.data);
 	}
 }
 

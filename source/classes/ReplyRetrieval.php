@@ -1,10 +1,4 @@
 <?php
-namespace classes;
-
-use classes\db as db;
-use classes\Utils as Utils;
-use PDO;
-
 class ReplyRetrieval {
 
 	private $earliest_date;

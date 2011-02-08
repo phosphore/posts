@@ -2,10 +2,10 @@ var AjaxTopic = function() {
 	
 $(document).ready(function(){ 
 	
-	window.onload = function() {
+	$(window).load(function() {
 		$("#content").show();
 		setInterval(update_topic, CONFIG.TOPIC_UPDATE_INTERVAL);
-	};
+	});
 	
 	function update_topic() {
 		if(parseInt($("#current_pg").attr("title")) == 1) {

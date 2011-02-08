@@ -2,11 +2,6 @@
 header("Content-Type: application/json; charset=UTF-8");
 
 require_once("../libs/AutoLoader.php");
-Autoloader::register();
-
-use classes\db as db;
-use classes\Utils as Utils;
-use classes\Validation as Validation;
 
 $validation = new Validation();
 
