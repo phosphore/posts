@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once("../libs/AutoLoader.php");
+require_once("../classes/AutoLoader.php");
 
 $validation = new Validation();
 if(!(isset($_POST['next_pg'])) || !(isset($_POST['earliest_date'])) || !(isset($_POST['latest_date'])) 

@@ -115,11 +115,12 @@ function pre_reply(id) {
 	var top_tri_span = $("<span></span>").attr("class","top_tri");
 	
 	var input_name = $("<input />").attr("class","input_name").attr("value","(enter your name)");
-	var txt_area = $("<textarea></textarea>").attr("class","reply_text_area").attr("rows","5").append("(enter your message)");
+	var txt_area = $("<textarea></textarea>").attr("class","reply_text_area").attr("rows","5").attr("id","msg").append("(enter your message)");
 	var post_and_canel_span = $("<span></span>").attr("class","post_and_cancel");
 	var post_btn = $("<button></button>").attr("id","post").append("post");
 	var cancel_btn = $("<button></button>").attr("id","cancel").append("cancel");
 	
+	$(topic_reply).append(FormatBar.reply_display('msg'));
 	$(topic_reply).append(back_tri_span);
 	$(topic_reply).append(top_tri_span);
 

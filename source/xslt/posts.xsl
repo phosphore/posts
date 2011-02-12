@@ -28,7 +28,7 @@
 					<xsl:value-of select="@author" />
 				</span>
 				<span class="message">
-					<xsl:value-of select="@message" />
+					<xsl:value-of select="@message" disable-output-escaping="yes" />
 					<xsl:if test="/posts/@pg_num = 1">
 						<button onclick="Reply.pre_reply('{concat('topic_',@id)}');"
 							type="button" class="reply_btn">reply</button>
@@ -54,7 +54,7 @@
 							<xsl:value-of select="@author" />
 						</span>
 						<span class="message">
-							<xsl:value-of select="@message" />
+							<xsl:value-of select="@message" disable-output-escaping="yes" />
 							<button style="display: none;" type="button" class="reply_btn"
 								onclick="Reply.pre_reply('{concat('reply_',@id)}');">reply</button>
 						</span>
@@ -78,7 +78,7 @@
 							<xsl:value-of select="@author" />
 						</span>
 						<span class="message">
-							<xsl:value-of select="@message" />
+							<xsl:value-of select="@message" disable-output-escaping="yes" />
 							<button style="display: none;" type="button" class="reply_btn"
 								onclick="Reply.pre_reply('{concat('reply_',@id)}');">reply</button>
 						</span>

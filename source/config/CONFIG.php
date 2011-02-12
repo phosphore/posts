@@ -15,7 +15,8 @@ const TOPICS_PER_PAGE = 4;
 $paths = implode(PATH_SEPARATOR, array(
 	'../config',
 	'../classes',
-	'../classes/XML'
+	'../classes/XML',
+	'../libs'
 ));
 
 set_include_path($paths);	

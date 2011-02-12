@@ -8,6 +8,7 @@ abstract class XMLCommon {
 	protected $post;
 	protected $node_name = "post";
 	protected $stylesheet = "";
+	protected $xml = "";
 	
 	public function __construct() {
 		$this->root = new DOMElement('posts');
@@ -35,9 +36,9 @@ abstract class XMLCommon {
 		return $this->xsl->transformToXML($this->doc);
 	}
 
-	protected function saveXML($xml) {
+	protected function saveXML() {
 		$this->doc->formatOutput = TRUE;
-		$this->doc->save($xml);
+		$this->doc->save($this->xml);
 	}
 	
 }

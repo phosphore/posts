@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once("../libs/AutoLoader.php");
+require_once("../classes/AutoLoader.php");
 
 $validation = new Validation();
 
@@ -21,6 +21,9 @@ if(!($validation->isValidTopicId($decoded->topic_id))
 	echo json_encode($validation->getResponse());
 	die();
 }
+
+$bbcode = new BBCode();
+$bbcode->SetAllowAmpersand(true);
 
 $update = true;
 
@@ -58,7 +61,7 @@ if($update == true) {
 
 	while($reply = $result->fetch(PDO::FETCH_OBJ)) {
 		$type = (empty($reply->fk_reply_id)) ? "reply_to_topic" : "reply_to_reply";
-		$reply_update[] = array("id"=> $reply->pk_reply_id, "message" => $reply->message, "type" => $type, "author" => $reply->author, "date" => "NEW", "empty" => $decoded->empty, "reply_to" => "@" . $reply->reply_to);
+		$reply_update[] = array("id"=> $reply->pk_reply_id, "message" => $bbcode->Parse($reply->message), "type" => $type, "author" => $reply->author, "date" => "NEW", "empty" => $decoded->empty, "reply_to" => "@" . $reply->reply_to);
 	}
 }
 

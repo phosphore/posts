@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once("../libs/AutoLoader.php");
+require_once("../classes/AutoLoader.php");
 
 $validation = new Validation();
 if(!(isset($_POST['topic_id'])) || !(isset($_POST['reply_id'])) || !(isset($_POST['parent_id']))
@@ -23,6 +23,8 @@ if($reply->error()) {
 }
 
 $db = new db();
+$bbcode = new BBCode;
+$bbcode->SetAllowAmpersand(true); 
 
 $error = true;
 $reply_to_author = null;
@@ -68,7 +70,7 @@ try {
 }
 
 if($error == false) {
-	echo json_encode(array("id" => $id, "comment" => $reply->getMessage(), "author" => $reply->getAuthor(), "date" => $reply->format_date($timestamp), "reply_to_author" => "@" . $reply_to_author));
+	echo json_encode(array("id" => $id, "comment" => $bbcode->Parse($reply->getMessage()), "author" => $reply->getAuthor(), "date" => $reply->format_date($timestamp), "reply_to_author" => "@" . $reply_to_author));
 } else {
 	$validation->addErrorMsg("An error occured");
 	echo json_encode($validation->getResponse());

@@ -1,19 +1,21 @@
 <?php 
-	require_once("../libs/AutoLoader.php");
+	require_once("../classes/AutoLoader.php");
 ?>
 
+<!DOCTYPE html>
 <html>
 <head>
     <title>Posts</title>
-    <script src="../libs/jquery-1.4.3.min.js" type="text/javascript"></script>
-    <script src="../config/CONFIG.js" type="text/javascript"></script>
-    <script src="../js/utils.js" type="text/javascript"></script>
-    <script src="../js/topic.js" type="text/javascript"></script>
-    <script src="../js/ajax_topic.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="../css/common.css" type="text/css" />
-    <link rel="stylesheet" href="../css/form.css" type="text/css" />
-    <link rel="stylesheet" href="../css/topic.css" type="text/css" />
-    <link rel="stylesheet" href="../css/paging.css" type="text/css" />
+    <script src="/posts/source/libs/jquery-1.4.3.min.js" type="text/javascript"></script>
+    <script src="/posts/source/config/CONFIG.js" type="text/javascript"></script>
+    <script src="/posts/source/js/utils.js" type="text/javascript"></script>
+    <script src="/posts/source/js/topic.js" type="text/javascript"></script>
+    <script src="/posts/source/js/ajax_topic.js" type="text/javascript"></script>
+    <script src="/posts/source/js/textarea_format.js" type="text/javascript"></script> 
+    <link href="/posts/source/css/common.css" type="text/css" rel="stylesheet" />
+    <link href="/posts/source/css/form.css" type="text/css" rel="stylesheet" />
+    <link href="/posts/source/css/topic.css" type="text/css" rel="stylesheet" />
+    <link href="/posts/source/css/paging.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -25,21 +27,20 @@ This page needs javascript to work properly.  You browser either has javascript 
 <div id="content">
 
 <div id="wrapper">
+	<div id="cap">New Topic</div>
 <div id="form">
     <fieldset>
-      <legend>Create a New Topic</legend>
-      <div id="error_topic" style="display: none"></div>
+     <div id="error_topic" style="display: none"></div>
       <p>
-	<label for="author"><span class="required">*</span> Name:</label> 
-	<input type="text" name="author" class="text" id="author" />
+		<label for="author"><span class="required">*</span> Name:</label> 
+		<input type="text" name="author" class="text" id="author" />
       </p>
-      <p>
 	 <label for="title"><span class="required">*</span> Title:</label> 
 	 <input type="text" name="title" class="text" id="title" />
-      </p>
       <p>
-	 <label for="msg"><span class="required">*</span> Message:</label> 
-	 <textarea rows="1" cols="1" id="msg" name="msg"></textarea>
+	 	<label for="msg"><span class="required">*</span> Message:</label> 
+	 	<script type="text/javascript">FormatBar.topic_display('msg');</script>
+	 	<textarea rows="1" cols="1" id="msg" name="msg"></textarea>
       </p>
       <input type="button" name="submit" id="submit" value="Post" />
     </fieldset>
@@ -67,26 +68,26 @@ if($count != 0) {
 ?>
 </div>
 
-<div id="paging">
 <?php
   	$xml_pager = new TopicXMLPager();
-    $total_pages = $topic->total_pages($count); 
-   	$pager->paging($total_pages,1);
-		
-    $xml_pager->build_pager(1,1, $pager->total_pages(), $topic_sql->getEarliestDate());
-    
-    echo $xml_pager->transform_pager();		
+    $total_pages = $topic->total_pages($count);
+    if($total_pages > 1) { 
+   		echo "<div id='paging'>";
+    	$pager->paging($total_pages,1);
+    	$xml_pager->build_pager(1,1, $pager->total_pages(), $topic_sql->getEarliestDate());
+    	echo $xml_pager->transform_pager();
+    	echo "</div>";	
+    }	
+   
 }
 ?>
-</div>
-
 
 <div id="data">
-  <?php
+<?php
    $data = new TopicXMLData();
    $data->build_data($topic_sql->getLatestDate(), 1);
    echo $data->transform_data();
-  ?>
+?>
 </div>
 
 </div>

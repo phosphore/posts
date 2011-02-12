@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once("../libs/AutoLoader.php");
+require_once("../classes/AutoLoader.php");
 
 $reply = new Reply();
 
@@ -19,6 +19,8 @@ if(!(isset($_POST['topic_id'])) || !(isset($_POST['earliest_date'])) || !(isset(
 $json_reply = new stdClass;
 
 $db = new db();
+$bbcode = new BBCode();
+$bbcode->SetAllowAmpersand(true);
 
 try {
 	$query_topic = $db->get_connection()->query(sprintf("select pk_topic_id, author, title, timestamp, message from topic where pk_topic_id=%s",$validation->getTopicId()));
@@ -37,7 +39,7 @@ while($_topic = $query_topic->fetch(PDO::FETCH_OBJ)) {
 	$_topic->title,
 	$topic->format_date($_topic->timestamp), 
 	$_topic->author,
-	$_topic->message
+	$bbcode->Parse($_topic->message)
 	);
 }
     
@@ -65,7 +67,7 @@ while($result = $reply_result->fetch(PDO::FETCH_OBJ)) {
 	$result->pk_reply_id, 
 	$reply->format_date($result->timestamp), 
 	$result->author,
-	$result->message,
+	$bbcode->Parse($result->message),
 	$result->reply_to,$type
 	);
 }

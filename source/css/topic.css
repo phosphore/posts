@@ -1,16 +1,14 @@
-@CHARSET "UTF-8";
-	
 .topic { 
 	border: 2px solid #333;
-	padding: 6px;
-	float: left;
-	width: 760px;
+	width: 768px;
 	background-color: #fff;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
-	margin-top: 15px;
-	font-size: 18px;
+	padding: 6px;
+	float: left;
+	margin: 10px;
+	font-size: 16px;
 }
 
 .topic a:visited, a { 
@@ -21,7 +19,6 @@
 #error_topic {
 	background-color: #e97e7e;
 	border: #333 1px solid;
-	margin-bottom: 10px;
 	margin-top: 10px;
 	text-align: left;
 }
@@ -30,4 +27,9 @@
 	list-style-position: inside;
 	margin-top: 8px;
 	margin-bottom: 8px;
+}
+
+.format_bar_topic {
+	float: right;
+	background-color: #fff;
 }

@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once("../libs/AutoLoader.php");
+require_once("../classes/AutoLoader.php");
 
 $validation = new Validation();
 
