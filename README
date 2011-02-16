@@ -1,12 +1,16 @@
 Description
 -----------
 
-This is a web application for posting topics and replies. It serves more as a prototype 
-for a messaging application that needs more consideration.  Topics and replies are 
-updated on the page dynamically at specified intervals.  Deleted replies are marked in 
-red during the update process so the user does not have to waste their time replying 
-to a deleted post. It's written in PHP, Javascript (with JQuery) and PostgreSQL. 
+This is a web application for posting topics and replies. It serves more as 
+a prototype for a messaging application that needs more consideration. 
+Topics and replies are updated on the page dynamically at specified 
+intervals (non-streaming). Any deleted replies are marked in red during 
+the update process so the user does not have to waste their time replying 
+to a deleted post. Topics and replies are generated in XML then transformed 
+with XSLT. It's written in PHP, Javascript (with JQuery) and I used PostgreSQL 
+as the database.  
 
-See screenshots.
+See the screenshots or the wiki page.
 
-Don't forget the .htaccess file in the core directory
+The .htaccess file is located the core directory.
+
