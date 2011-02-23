@@ -34,13 +34,7 @@ $(document).ready(function(){
 		$.ajax({
 			'type' 		: 'POST',
 			'url' 		: '/posts/source/core/post_topic.php',
-			'dataType'  	: 'json',
-			'data' 		: {
-				'type' 	: 'post',
-				'author': $('#author').val(),
-				'title' : $("#title").val(),
-				'msg' 	: $("#msg").val()
-			},
+			'data' : $('#form').serialize(),
 			'success' 	: function(data){			
 				if(data.error == undefined) {
 					Topic.create_topic(data);

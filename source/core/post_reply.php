@@ -65,6 +65,7 @@ try {
 	$db->get_connection()->commit();
 
 } catch (PDOException $e) {
+	$db->get_connection()->rollBack();
 	if(DEBUG) echo $e->getMessage();
 	die();
 }
@@ -76,5 +77,5 @@ if($error == false) {
 	echo json_encode($validation->getResponse());
 }
 
-unset($db,$reply,$validation);
+unset($db,$reply,$validation,$bbcode);
 ?>

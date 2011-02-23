@@ -28,7 +28,7 @@ This page needs javascript to work properly.  You browser either has javascript 
 
 <div id="wrapper">
 	<div id="cap">New Topic</div>
-<div id="form">
+<form id="form">
     <fieldset>
      <div id="error_topic" style="display: none"></div>
       <p>
@@ -44,7 +44,7 @@ This page needs javascript to work properly.  You browser either has javascript 
       </p>
       <input type="button" name="submit" id="submit" value="Post" />
     </fieldset>
-</div>
+</form>
 </div>
 
 <div id="posts">

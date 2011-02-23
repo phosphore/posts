@@ -31,11 +31,12 @@ try {
 	
 	$db->get_connection()->commit();
 } catch (PDOException $e) {
+	$db->get_connection()->rollBack();
 	if(DEBUG) echo $e->getMessage();
 	die();
 }
 
 echo json_encode(array("id" => $id, "author" => $topic->getAuthor(), "title" => $topic->getTitle(), "date" => $topic->format_date($timestamp)));
 
-unset($db,$topic);
+unset($db,$topic,$validation);
 ?>

@@ -1,5 +1,4 @@
 #form {
-	background-color: #e5e5e5;
 	margin-bottom: 20px;
 	border: 1px solid #333;
 	-moz-border-radius-bottomleft: 8px;
@@ -51,7 +50,6 @@
 }
 
 #form input {
-	border: 2px solid #333;
 	padding: 4px;
 	font-size: 16px;
 }
@@ -59,7 +57,6 @@
 #form textarea {
 	height: 100px;
 	width: 320px;
-	border: 2px solid #333;
 	padding: 4px;
 	font-size: 16px;
 }
@@ -88,4 +85,5 @@
 	-moz-border-radius: .5em;
 	border-radius: .5em;
 	font-weight: bold;
+	margin-top: 4px;
 }

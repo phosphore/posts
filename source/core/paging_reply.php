@@ -106,5 +106,5 @@ if($reply_result->rowCount() == 0) {
 	echo json_encode($json_reply);
 }
 
-unset($pager,$reply,$topic,$db,$json_reply);
+unset($pager,$reply,$topic,$db,$json_reply,$bbcode);
 ?>

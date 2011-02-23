@@ -73,5 +73,5 @@ if($query_topic->rowCount() == 0) {
 	echo json_encode($json_reply);
 }
 
-unset($db, $pager, $topic,$json_reply);
+unset($db,$pager,$topic,$json_reply);
 ?>

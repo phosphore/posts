@@ -67,5 +67,5 @@ if($update == true) {
 
 echo json_encode($reply_update);
 
-unset($db);
+unset($db,$bbcode,$validation);
 ?>
