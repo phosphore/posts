@@ -9,7 +9,7 @@ the update process so the user does not have to waste their time replying
 to a deleted post. Topics and replies are generated in XML then transformed 
 with XSLT. It's written in PHP and Javascript (with JQuery).  
 
-See the screenshots or the wiki page.
+See the wiki page.
 
-The .htaccess file is located the core directory.
+The .htaccess file is located in the core directory.
 
