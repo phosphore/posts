@@ -1,0 +1,15 @@
+h1. Dynamic message board web application
+
+h2. Description
+
+Topics and replies are updated on the page dynamically at specified intervals (non-streaming). 
+Any deleted replies are marked in red during the update process so the user does not have to 
+waste their time replying to a deleted post. Topics and replies are generated in XML then 
+transformed with XSLT. It's written in PHP and Javascript (with JQuery).
+
+Screenshots:
+
+!https://github.com/tgus/posts/raw/posts_devel/source/images/screenshot_topics.png!
+
+!https://github.com/tgus/posts/raw/posts_devel/source/images/screenshot_replies.png!
+
