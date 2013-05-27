@@ -2,8 +2,6 @@ h1. Dynamic message board web application
 
 h2. Description
 
-Adaptation for WAMPs servers.
-
 Topics and replies are updated on the page dynamically at specified intervals (non-streaming). 
 Any deleted replies are marked in red during the update process so the user does not have to 
 waste their time replying to a deleted post. Topics and replies are generated in XML then 
